@@ -1,0 +1,56 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(uuid())
+  name          String
+  email         String    @unique
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime? @updatedAt @map("updated_at")
+  password_hash String
+
+  cart   Cart?   @relation(fields: [cartId], references: [id])
+  cartId String? @map("cart_id")
+
+  @@map("users")
+}
+
+model Product {
+  id          String    @id @default(uuid())
+  name        String
+  description String
+  price       Decimal
+  quantity    Decimal
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime? @updatedAt @map("updated_at")
+
+  Cart   Cart?   @relation(fields: [cartId], references: [id])
+  cartId String? @map("cart_id")
+
+  @@map("products")
+}
+
+model Cart {
+  id        String    @id @default(uuid())
+  total     Decimal   @default(0)
+  pay       Boolean   @default(false)
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  User      User[]
+  Product   Product[]
+
+  @@map("carts")
+}
+
+// model PaymentHistory {
+//   id        String    @id @default(uuid())
+//   total     Decimal   @default(0)
+//   createdAt DateTime  @default(now()) @map("created_at")
+//   updatedAt DateTime? @updatedAt @map("updated_at")
+// }
