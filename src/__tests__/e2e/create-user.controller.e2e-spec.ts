@@ -4,7 +4,7 @@ import { INestApplication } from '@nestjs/common'
 import { Test } from '@nestjs/testing'
 import request from 'supertest'
 
-describe('Create account (E2E)', () => {
+describe('Create user (E2E)', () => {
   let app: INestApplication
   let prisma: PrismaService
 
@@ -35,5 +35,21 @@ describe('Create account (E2E)', () => {
       },
     })
     expect(userOnDatabase).toBeTruthy()
+  })
+
+  test('[POST] /user Conflict Exception', async () => {
+    await request(app.getHttpServer()).post('/user').send({
+      name: 'John Doe',
+      email: 'johnDoe@example.com',
+      password: '123456',
+    })
+
+    const response = await request(app.getHttpServer()).post('/user').send({
+      name: 'John Doe',
+      email: 'johnDoe@example.com',
+      password: '123456',
+    })
+    console.log(response)
+    expect(response.statusCode).toBe(409)
   })
 })

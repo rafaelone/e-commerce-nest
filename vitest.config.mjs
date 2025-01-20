@@ -4,6 +4,9 @@ import tsConfigPaths from 'vite-tsconfig-paths'
 
 export default defineConfig({
   test: {
+    // coverage: {
+    //   include: ['src/usecases/**/*.ts'],
+    // },
     globals: true,
     root: './',
   },
