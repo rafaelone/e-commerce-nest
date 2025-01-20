@@ -6,12 +6,10 @@ export function makeProduct(override: Partial<Product> = {}) {
   const product = {
     id: randomUUID(),
     name: faker.person.firstName(),
-    description: faker.food.description,
+    description: faker.food.description(),
     price: faker.number.float(),
     quantity: faker.number.int(),
     cartId: null,
-    createdAt: new Date(),
-    updatedAt: null,
     ...override,
   }
 

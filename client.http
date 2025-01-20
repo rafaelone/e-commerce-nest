@@ -11,3 +11,10 @@ Content-Type:  application/json
   "price": 3999.99,
   "quantity": 10
 }
+###
+
+# @name fetch_products
+
+GET {{baseUrl}}/products
+Content-Type:  application/json
+
