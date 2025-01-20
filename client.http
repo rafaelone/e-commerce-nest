@@ -1,0 +1,13 @@
+@baseUrl = http://localhost:3000
+
+# @name create_product
+
+POST {{baseUrl}}/product
+Content-Type:  application/json
+
+{
+  "name": "PS5",
+  "description": "1tb",
+  "price": 3999.99,
+  "quantity": 10
+}
